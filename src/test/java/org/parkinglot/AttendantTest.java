@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class AttendantTest {
 
@@ -62,6 +61,25 @@ public class AttendantTest {
 
         attendant.unpark(car);
         attendant.park(car);
+    }
+
+    @Test
+    public void testLeastAvailableCarSelector() throws AlreadyParkedException, AllParkingLotsAreFullException, ParkingLotFullException {
+        ParkingLotSelector parkingLotSelector= mock(ParkingLotSelector.class);
+        Attendant attendant= new Attendant(parkingLotSelector);
+        ParkingLot parkingLot1 = mock(ParkingLot.class);
+        ParkingLot parkingLot2 = mock(ParkingLot.class);
+        when(parkingLot1.isFull()).thenReturn(false);
+        when(parkingLot2.isFull()).thenReturn(false);
+        attendant.assignLot(parkingLot1);
+        attendant.assignLot(parkingLot2);
+
+        Parkable car = mock(Parkable.class);
+
+        when(parkingLotSelector.select(any())).thenReturn(parkingLot1);
+        attendant.park(car);
+        verify(parkingLot1, times(1)).park(car);
+        verify(parkingLot2, never()).park(car);
     }
 
 }

@@ -52,4 +52,8 @@ public class ParkingLot {
     public void addObserver(ParkingLotObserver observer) {
         this.observers.add(observer);
     }
+
+    public int numberOfCars(){
+        return this.cars.size();
+    }
 }
