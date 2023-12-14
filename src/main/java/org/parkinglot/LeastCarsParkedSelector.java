@@ -7,8 +7,8 @@ import java.util.Optional;
 public class LeastCarsParkedSelector implements ParkingLotSelector {
     @Override
     public ParkingLot select(List<ParkingLot> parkingLots) {
-        return parkingLots.stream()
+        return parkingLots.size() > 0 ? parkingLots.stream()
                 .sorted(Comparator.comparing(ParkingLot::numberOfCars))
-                .findFirst().get();
+                .findFirst().get() : null;
     }
 }

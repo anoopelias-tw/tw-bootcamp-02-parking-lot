@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,4 +25,12 @@ public class LeastCarsParkedSelectorTest {
         ParkingLot parkingLot = leastCarsParkedSelector.select(parkingLots);
         assertEquals(parkingLot, parkingLot2);
     }
+
+    @Test
+    void shouldReturnNullWhenAvailableLotsAreEmpty() {
+        LeastCarsParkedSelector leastCarsParkedSelector = new LeastCarsParkedSelector();
+        ParkingLot parkingLot = leastCarsParkedSelector.select(new ArrayList<>());
+        assertNull(parkingLot);
+    }
+
 }
