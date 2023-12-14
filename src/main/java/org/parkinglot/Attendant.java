@@ -1,12 +1,20 @@
 package org.parkinglot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Attendant implements ParkingLotObserver {
 
-    private final ParkingLots availableLots = new ParkingLots();
+    private final List<ParkingLot> availableLots = new ArrayList<>();
     private final Map<Parkable, ParkingLot> cars = new HashMap<>();
+
+    private final ParkingLotSelector parkingLotSelector;
+
+    public Attendant() {
+        parkingLotSelector = new FirstAvailableParkingLotSelector();
+    }
 
     public void assignLot(ParkingLot parkingLot) {
         parkingLot.addObserver(this);
@@ -26,7 +34,7 @@ public class Attendant implements ParkingLotObserver {
         }
 
         try {
-            ParkingLot parkingLot = availableLots.iterator().next();
+            ParkingLot parkingLot = parkingLotSelector.select(availableLots);
             parkingLot.park(car);
             cars.put(car, parkingLot);
         } catch (ParkingLotFullException e) {
