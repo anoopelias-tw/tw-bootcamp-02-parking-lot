@@ -20,7 +20,7 @@ public class AttendantTest {
 
     @Test
     public void testAttendantThrowsErrorWhenAllParkingLotsAreFull() throws AlreadyParkedException, AllParkingLotsAreFullException {
-        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingLot parkingLot = new ParkingLot(1, 100);
         Attendant attendant = new Attendant(new FirstAvailableParkingLotSelector());
         attendant.assignLot(parkingLot);
         attendant.park(mock(Parkable.class));
@@ -30,8 +30,8 @@ public class AttendantTest {
     @Test
     public void testAttendantCanHandleMultipleParkingLots() throws AlreadyParkedException, AllParkingLotsAreFullException {
         Attendant attendant = new Attendant(new FirstAvailableParkingLotSelector());
-        attendant.assignLot(new ParkingLot(1));
-        attendant.assignLot(new ParkingLot(1));
+        attendant.assignLot(new ParkingLot(1, 100));
+        attendant.assignLot(new ParkingLot(1, 100));
 
         attendant.park(mock(Parkable.class));
         attendant.park(mock(Parkable.class));
@@ -42,8 +42,8 @@ public class AttendantTest {
     @Test
     public void testParkAlreadyParkedCarInAnotherLot() throws AlreadyParkedException, AllParkingLotsAreFullException {
         Attendant attendant = new Attendant(new FirstAvailableParkingLotSelector());
-        attendant.assignLot(new ParkingLot(1));
-        attendant.assignLot(new ParkingLot(1));
+        attendant.assignLot(new ParkingLot(1, 100));
+        attendant.assignLot(new ParkingLot(1, 100));
 
         Parkable car = mock(Parkable.class);
         attendant.park(car);
@@ -54,7 +54,7 @@ public class AttendantTest {
     @Test
     public void testAttendantCanUnparkTheCar() throws AlreadyParkedException, AllParkingLotsAreFullException {
         Attendant attendant = new Attendant(new FirstAvailableParkingLotSelector());
-        attendant.assignLot(new ParkingLot(1));
+        attendant.assignLot(new ParkingLot(1, 100));
 
         Parkable car = mock(Parkable.class);
         attendant.park(car);

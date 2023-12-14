@@ -9,11 +9,13 @@ public class ParkingLot {
     private final Set<Parkable> cars;
 
     private final ParkingLotObservers observers;
+    private final int cost;
 
-    public ParkingLot(int capacity) {
+    public ParkingLot(int capacity, int cost) {
         cars = new HashSet<>();
         observers = new ParkingLotObservers();
         this.capacity = capacity;
+        this.cost = cost;
     }
 
     public void park(Parkable car) throws AlreadyParkedException, ParkingLotFullException {
@@ -55,5 +57,9 @@ public class ParkingLot {
 
     public int numberOfCars(){
         return this.cars.size();
+    }
+
+    public int cost() {
+        return cost;
     }
 }
