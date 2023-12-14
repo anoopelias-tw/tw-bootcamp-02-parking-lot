@@ -12,7 +12,7 @@ public class AttendantTest {
     @Test
     public void testAttendantCanDirectTheCarToHisParkingLot() throws AlreadyParkedException, AllParkingLotsAreFullException, ParkingLotFullException {
         ParkingLot parkingLot = mock(ParkingLot.class);
-        Attendant attendant = new Attendant();
+        Attendant attendant = new Attendant(new FirstAvailableParkingLotSelector());
         attendant.assignLot(parkingLot);
         attendant.park(mock(Parkable.class));
 
@@ -22,7 +22,7 @@ public class AttendantTest {
     @Test
     public void testAttendantThrowsErrorWhenAllParkingLotsAreFull() throws AlreadyParkedException, AllParkingLotsAreFullException {
         ParkingLot parkingLot = new ParkingLot(1);
-        Attendant attendant = new Attendant();
+        Attendant attendant = new Attendant(new FirstAvailableParkingLotSelector());
         attendant.assignLot(parkingLot);
         attendant.park(mock(Parkable.class));
         assertThrows(AllParkingLotsAreFullException.class, () -> attendant.park(mock(Parkable.class)));
@@ -30,7 +30,7 @@ public class AttendantTest {
 
     @Test
     public void testAttendantCanHandleMultipleParkingLots() throws AlreadyParkedException, AllParkingLotsAreFullException {
-        Attendant attendant = new Attendant();
+        Attendant attendant = new Attendant(new FirstAvailableParkingLotSelector());
         attendant.assignLot(new ParkingLot(1));
         attendant.assignLot(new ParkingLot(1));
 
@@ -42,7 +42,7 @@ public class AttendantTest {
 
     @Test
     public void testParkAlreadyParkedCarInAnotherLot() throws AlreadyParkedException, AllParkingLotsAreFullException {
-        Attendant attendant = new Attendant();
+        Attendant attendant = new Attendant(new FirstAvailableParkingLotSelector());
         attendant.assignLot(new ParkingLot(1));
         attendant.assignLot(new ParkingLot(1));
 
@@ -54,7 +54,7 @@ public class AttendantTest {
 
     @Test
     public void testAttendantCanUnparkTheCar() throws AlreadyParkedException, AllParkingLotsAreFullException {
-        Attendant attendant = new Attendant();
+        Attendant attendant = new Attendant(new FirstAvailableParkingLotSelector());
         attendant.assignLot(new ParkingLot(1));
 
         Parkable car = mock(Parkable.class);

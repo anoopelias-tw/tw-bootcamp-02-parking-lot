@@ -11,9 +11,9 @@ public class Attendant implements ParkingLotObserver {
     private final Map<Parkable, ParkingLot> cars = new HashMap<>();
 
     private final ParkingLotSelector parkingLotSelector;
-
-    public Attendant() {
-        parkingLotSelector = new FirstAvailableParkingLotSelector();
+    
+    public Attendant(ParkingLotSelector parkingLotSelector) {
+        this.parkingLotSelector = parkingLotSelector;
     }
 
     public void assignLot(ParkingLot parkingLot) {
