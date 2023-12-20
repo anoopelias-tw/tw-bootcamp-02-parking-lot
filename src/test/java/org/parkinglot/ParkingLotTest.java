@@ -93,7 +93,7 @@ public class ParkingLotTest {
         parkingLot.park(car);
         parkingLot.unpark(car);
 
-        verify(owner, times(1)).notifyAvailable(parkingLot);
+        verify(owner, times(3)).notifyAvailable(parkingLot);
         verify(trafficPolice, times(1)).notifyAvailable(parkingLot);
     }
 
